@@ -75,7 +75,6 @@ join public.taxi_zone_lookup as d on g.dolocationID  = d.LocationID
 where g.lpep_pickup_datetime >= '2025-11-01' and g.lpep_pickup_datetime < '2025-12-01'
 and p.Zone = 'East Harlem North'
 order by g.tip_amount desc
+limit 1
 ;
 ```
-    limit 1
-    ;
