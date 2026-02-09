@@ -8,12 +8,17 @@ import time
 
 
 # Change this to your bucket name
-BUCKET_NAME = "dezoomcamp_hw3_2025"
+BUCKET_NAME = "de-data-warehouse-bucket"
 
-# If you authenticated through the GCP SDK you can comment out these two lines
-CREDENTIALS_FILE = "gcs.json"
-client = storage.Client.from_service_account_json(CREDENTIALS_FILE)
-# If commented initialize client with the following
+# Try credentials from env var or local service account file. If not present, use Application Default Credentials (ADC)
+CREDENTIALS_FILE = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "service_account.json")
+if os.path.exists(CREDENTIALS_FILE):
+    print(f"Using credentials file: {CREDENTIALS_FILE}")
+    client = storage.Client.from_service_account_json(CREDENTIALS_FILE)
+else:
+    print("No credentials file found at path; attempting to use Application Default Credentials (ADC)")
+    client = storage.Client()
+# Alternatively, you can initialize with an explicit project:
 # client = storage.Client(project='zoomcamp-mod3-datawarehouse')
 
 
